@@ -1,0 +1,57 @@
+<html>
+<head>
+    <title>Student Management System</title>
+    <style>
+        * {
+            font-size: 38px;
+            font-family: "Comic Sans MS";
+        }
+        body {
+	    background-image: url('https://images.pexels.com/photos/1109543/pexels-photo-1109543.jpeg');
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+        .nav {
+            background-color: black;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5%;
+        }
+        .content {
+            min-height: calc(100vh - 200px); /* Adjust the value as needed */
+            padding: 15px;
+        }
+        footer {
+		color: black;
+		padding: 5px;
+		text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <div class="nav">
+            {% if user.is_authenticated %}
+                <a href="{% url 'ulogout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'ulogin' %}">Login</a>
+                <a href="{% url 'usignup' %}">Signup</a>
+                <a href="{% url 'usnp' %}">Send New Password</a>
+            {% endif %}
+        </div>
+
+        <div class="content">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </center>
+
+    <footer>
+        <h2>DJ1782318_VinitPalekar</h2>
+    </footer>
+</body>
+</html>

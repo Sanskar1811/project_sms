@@ -1,0 +1,16 @@
+{%  extends 'base.html' %}
+
+{% block content %}
+
+<h1> Send New Password </h1>
+<form method = "POST">
+{%  csrf_token %}
+<input type = "email"  name = "un"  placeholder = "Enter email id"  required />
+<br><br>
+<input type = "submit"  value = "Send Password" />
+<br>
+<h2> Password will send on your email </h2>
+</form>
+<h2> {{ msg }} </h2>
+{% endblock %}
+

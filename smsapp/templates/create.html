@@ -1,0 +1,109 @@
+{% load static %}
+
+<html>
+<head>
+    <title>Student Management System</title>
+    <style>
+        * {
+            font-size: 38px;
+            font-family: Comic Sans;
+        }
+	body {
+            background-color: lightyellow;
+	}
+        .nav {
+            background-color: black;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5%;
+        }
+	 footer {
+           	color: black;
+		padding: 10px;
+		text-align: left;
+        }
+    </style>
+<script>
+function check() {
+    let rno = document.getElementById("id_rno");
+    let name = document.getElementById("id_name");
+    let upload_file = document.getElementById("id_upload_file");
+    let msg = document.getElementById("msg");
+
+    if (rno.value === "" || isNaN(parseInt(rno.value))) {
+        alert("Enter a valid roll no");
+        msg.innerHTML = "";
+        rno.focus();
+        return false;
+    }
+
+    if (parseInt(rno.value) < 0) {
+        alert("Minimum Roll no should be 1");
+        msg.innerHTML = "";
+        rno.value = "";
+        rno.focus();
+        return false;
+    }
+
+    if (name.value === "") {
+        alert("Enter name");
+        msg.innerHTML = "";
+        name.focus();
+        return false;
+    }
+
+    var letters = /^[A-Za-z]+$/;
+    if (!name.value.match(letters)) {
+        alert("Name should only contain alphabets");
+        msg.innerHTML = "";
+        name.focus();
+        return false;
+    }
+
+    if (upload_file.value === "") {
+        alert("Choose a marksheet to upload");
+        return false;
+    }
+
+    if (upload_file.files[0].size > 2621440) {
+        alert("File size should be less than 2.5MB");
+        return false;
+    }
+
+    return true;
+}
+
+</script>
+</head>
+<body>
+    <center>
+        
+        <div class="nav">
+            {% if user.is_authenticated %}
+                <a href="{% url 'ulogout' %}"> Logout </a>
+		<a href="{% url 'create' %}"> Add Students </a>
+		<a href="{% url 'view' %}"> View Students </a>
+            {% else %}
+                <a href="{% url 'ulogin' %}"> Login </a>
+                <a href="{% url 'usignup' %}"> Signup </a>
+                <a href="{% url 'usnp' %}"> Send New Password </a>
+            {% endif %}
+        </div>
+<h1> Add Students Details Here </h1>
+<form method = "POST"  enctype="multipart/form-data"  onsubmit="return check()">
+{% csrf_token  %}
+<table border = "5">
+    {{ fm.as_table }}
+
+</table>
+<br>
+<input type = "submit"  value = "Submit"/> <h2 id="msg"> {{  msg  }} </h1>
+</form>
+<footer>
+        <h2>DJ1782318_VinitPalekar</h2>
+    </footer>
+</center>
+</body>
+</html>
